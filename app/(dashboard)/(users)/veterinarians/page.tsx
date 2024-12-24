@@ -14,7 +14,7 @@ import type { District, VetStation, User, Veterinarian } from "~/lib/type"
 import { Dialog, DialogContent, DialogHeader } from "~/components/ui/dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'
-import { districtsControllerFindAll, veterinariansControllerFindAll, veterinariansControllerCreate, veterinariansControllerRemove, veterinariansControllerUpdate } from '~/app/api'
+import { districtsControllerFindAll, veterinariansControllerFindAll, veterinariansControllerCreate, veterinariansControllerRemove, veterinariansControllerUpdate } from '~/lib/api'
 
 export default function Veterinarians() {
     const COLUMNS = [
