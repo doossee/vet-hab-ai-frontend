@@ -5,8 +5,8 @@
  * The dr-ikramov API description
  * OpenAPI spec version: 0.1
  */
-import { createInstance } from '../../lib/api-instance';
-import type { BodyType } from '../../lib/api-instance';
+import { createInstance } from '~/lib/api-instance';
+import type { BodyType } from '~/lib/api-instance';
 export type DiseaseTypesControllerFindAllById = typeof DiseaseTypesControllerFindAllById[keyof typeof DiseaseTypesControllerFindAllById];
 
 
