@@ -238,30 +238,5 @@ export const navLinks: Record<UserRole, {title: string, icon: any, url: string}[
             icon: FlaskRound,
             url: "/blood-serum-tests",
         },
-        {
-            title: "Hayvonlar",
-            icon: PawPrint,
-            url: "/animals",
-        },
-        {
-            title: "Siydik tekshiruvi",
-            icon: FlaskConical,
-            url: "/urine-tests",
-        },
-        {
-            title: "Tezak tekshiruvi",
-            icon: Shovel,
-            url: "/dung-tests",
-        },
-        {
-            title: "Kasallik",
-            icon: ScanHeart,
-            url: "/diseases",
-        },
-        {
-            title: "Вакцина",
-            icon: PillBottle,
-            url: "/vaccines",
-        },
     ],
 }
