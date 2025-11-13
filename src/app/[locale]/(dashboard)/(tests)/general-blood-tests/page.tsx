@@ -1,62 +1,54 @@
-'use client'
+"use client";
 
-import { useMemo } from 'react'
-import { Plus } from 'lucide-react'
-import { useSearchParams } from "next/navigation"
-import { useI18n } from "@/shared/hooks/use-i18n"
-import { useCrud } from '@/shared/hooks/use-crud'
-import { Button } from '@/shared/components/ui/button'
-import type { GeneralBloodTest } from "@/shared/types"
-import { DataTable } from '@/shared/components/data-table'
-import { Drawer } from '@/shared/components/elements/drawer'
-import { usePathname, useRouter } from "@/shared/i18n/routing"
-import { createGeneralBloodTestColums } from '@/entities/general-blood-tests'
-import { GeneralBloodTestForm, GeneralBloodTestSchema, generalBloodTestValues } from '@/features/general-blood-tests'
-import { generalBloodTestControllerCreate, generalBloodTestControllerFindAll, generalBloodTestControllerUpdate, generalBloodTestControllerRemove } from '@/shared/api'
+import { useMemo } from "react";
+import { useI18n } from "@/shared/hooks/use-i18n";
+import { useCrud } from "@/shared/hooks/use-crud";
+import { QUERY_PARAM_KEYS } from "@/shared/constants";
+import type { GeneralBloodTest } from "@/shared/types";
+import { DataTable } from "@/shared/components/data-table";
+import { Modal } from "@/shared/components/elements/modal";
+import { useSearchQueryParams } from "@/shared/hooks/use-query-params";
+import { createGeneralBloodTestColumns } from "@/entities/general-blood-tests";
+import { useGetGeneralBloodTests } from "@/entities/general-blood-tests/services/queries";
+import { queryParamKeys } from '@/entities/general-blood-tests/utils/constants/query-param-keys';
+import { GeneralBloodTestForm, GeneralBloodTestSchema, generalBloodTestValues } from "@/features/general-blood-tests";
+import { useCreateGeneralBloodTest, useDeleteGeneralBloodTest, useUpdateGeneralBloodTest } from "@/entities/general-blood-tests/services/mutations";
 
 export default function GeneralBloodTests() {
-    const router = useRouter()
-    const pathname = usePathname()
-    const query = useSearchParams()
-    const { t, locale } = useI18n()
+  const { t, locale } = useI18n();
+  const { get, setMany } = useSearchQueryParams();
 
-    const newAnimal = query.get('new')
-    const animalId = query.get('animalId') ? Number(query.get('animalId')) : null
+  const newAnimal = get(QUERY_PARAM_KEYS.NEW);
+  const animalId = get(QUERY_PARAM_KEYS.ANIMAL_ID, true);
 
-    const { dialog, itemId, items, loading, totalItems, handleClose, handleDelete, handleEditItem, handleGetItems, onSubmit, setDialog } = useCrud<GeneralBloodTest, GeneralBloodTestSchema, GeneralBloodTestSchema>({
-        dialogValue: !!newAnimal,
-        findAll: generalBloodTestControllerFindAll,
-        create: generalBloodTestControllerCreate as any,
-        update: generalBloodTestControllerUpdate,
-        remove: generalBloodTestControllerRemove,
-        extraOnClose: () => newAnimal && router.push(pathname + ( animalId ? '?animalId='+animalId : ''))
-    })
+  const { dialog, editedItem, createButton, handleClose, handleDelete, handleEditItem, onSubmit } = useCrud<GeneralBloodTest, GeneralBloodTestSchema, GeneralBloodTestSchema>({
+    dialogValue: !!newAnimal,
+    createMutation: useCreateGeneralBloodTest,
+    updateMutation: useUpdateGeneralBloodTest,
+    removeMutation: useDeleteGeneralBloodTest,
+    extraOnClose: () => {
+      if(!newAnimal) return
 
-    const columns = useMemo(() => createGeneralBloodTestColums(handleEditItem, handleDelete, t, locale), [handleEditItem, handleDelete])
+      setMany({
+        [QUERY_PARAM_KEYS.NEW]: null,
+        [QUERY_PARAM_KEYS.ANIMAL_ID]: animalId || null
+      })
+    }
+  });
 
-    return (
-        <div>
-            <DataTable
-                loading={loading}
-                columns={columns}
-                items={items as any}
-                totalItems={totalItems}
-                callback={handleGetItems}
-                topSlot={<Button onClick={() => setDialog(true)} size={'default'} className="mt-0! w-full sm:w-fit">
-                    <Plus />
-                    {t("inspections.createBloodTest")}
-                </Button>} />
+  const columns = useMemo(() => createGeneralBloodTestColumns(handleEditItem, handleDelete, t, locale), [handleEditItem, handleDelete]);
 
-            <Drawer
-                open={dialog}
-                onClose={handleClose}
-                widthClassName='max-w-[650px]!'
-                title={t(itemId?"inspections.editBloodTest":"inspections.createBloodTest")}>
-                <GeneralBloodTestForm
-                    onSubmit={onSubmit}
-                    animalId={animalId}
-                    defaultValues={itemId?items.find(i => i.id === itemId):(animalId?generalBloodTestValues(animalId):undefined)} />
-            </Drawer>
-        </div>
-    )
+  return (
+    <div>
+      <DataTable
+        columns={columns}
+        filterQueryParamKeys={queryParamKeys}
+        queryFunction={useGetGeneralBloodTests}
+        topSlot={createButton(t("inspections.createBloodTest"))} />
+
+      <Modal open={dialog} onClose={handleClose} widthClassName="max-w-[650px]!" title={t(editedItem ? "inspections.editBloodTest" : "inspections.createBloodTest")}>
+        <GeneralBloodTestForm onSubmit={onSubmit} animalId={animalId as number} defaultValues={editedItem ? editedItem : animalId ? {...generalBloodTestValues(animalId as number), date: new Date()} : undefined} />
+      </Modal>
+    </div>
+  );
 }

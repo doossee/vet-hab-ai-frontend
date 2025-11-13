@@ -1,49 +1,34 @@
-'use client'
+"use client";
 
-import { useMemo } from 'react'
-import { Plus } from 'lucide-react'
-import type { Eyelid } from "@/shared/types"
-import { useI18n } from "@/shared/hooks/use-i18n"
-import { useCrud } from '@/shared/hooks/use-crud'
-import { Button } from '@/shared/components/ui/button'
-import { createEyeLidColums } from '@/entities/eye-lid'
-import { DataTable } from '@/shared/components/data-table'
-import { Drawer } from '@/shared/components/elements/drawer'
-import { EyeLidForm, EyeLidSchema } from '@/features/eye-lid'
-import { eyelidsControllerFindAll, eyelidsControllerCreate, eyelidsControllerRemove, eyelidsControllerUpdate } from '@/shared/api'
+import { useMemo } from "react";
+import type { Eyelid } from "@/shared/types";
+import { useI18n } from "@/shared/hooks/use-i18n";
+import { useCrud } from "@/shared/hooks/use-crud";
+import { createEyeLidColumns } from "@/entities/eye-lid";
+import { DataTable } from "@/shared/components/data-table";
+import { EyeLidForm, EyeLidSchema } from "@/features/eye-lid";
+import { useGetEyeLids } from "@/entities/eye-lid/services/queries";
+import { useCreateEyeLid, useDeleteEyeLid, useUpdateEyeLid } from "@/entities/eye-lid/services/mutations";
+import { Modal } from "@/shared/components/elements/modal";
 
 export default function EyeLid() {
-    const { t } = useI18n()
-    
-    const { dialog, itemId, items, loading, totalItems, handleClose, handleDelete, handleEditItem, handleGetItems, onSubmit, setDialog } = useCrud<Eyelid, EyeLidSchema, EyeLidSchema>({
-        findAll: eyelidsControllerFindAll,
-        create: eyelidsControllerCreate,
-        update: eyelidsControllerUpdate,
-        remove: eyelidsControllerRemove,
-    })
+  const { t } = useI18n();
 
-    const columns = useMemo(() => createEyeLidColums(handleEditItem, handleDelete, t), [handleEditItem, handleDelete])
+  const { dialog, editedItem, createButton, handleClose, handleDelete, handleEditItem, onSubmit } = useCrud<Eyelid, EyeLidSchema, EyeLidSchema>({
+    createMutation: useCreateEyeLid,
+    updateMutation: useUpdateEyeLid,
+    removeMutation: useDeleteEyeLid,
+  });
 
-    return (
-        <div>
-            <DataTable
-                loading={loading}
-                columns={columns}
-                items={items as any}
-                totalItems={totalItems}
-                callback={handleGetItems}
-                topSlot={<Button onClick={() => setDialog(true)} size={'sm'} className="mt-0! w-full sm:w-fit">
-                    <Plus />
-                    {t("management.createEyeLid")}
-                </Button>}
-            />
+  const columns = useMemo(() => createEyeLidColumns(handleEditItem, handleDelete, t), [handleEditItem, handleDelete]);
 
-            <Drawer
-                open={dialog}
-                onClose={handleClose}
-                title={t(itemId?"management.editEyeLid":"management.createEyeLid")}>
-                <EyeLidForm onSubmit={onSubmit} defaultValues={itemId?items.find(i => i.id === itemId):undefined as any} />
-            </Drawer>
-        </div>
-    )
+  return (
+    <div>
+      <DataTable columns={columns} queryFunction={useGetEyeLids} topSlot={createButton(t("management.createEyeLid"))} />
+
+      <Modal open={dialog} onClose={handleClose} title={t(editedItem ? "management.editEyeLid" : "management.createEyeLid")}>
+        <EyeLidForm onSubmit={onSubmit} defaultValues={editedItem ? editedItem : (undefined as any)} />
+      </Modal>
+    </div>
+  );
 }

@@ -1,2 +1,2 @@
-export { createVaccineColums } from './columns'
-export { VaccineFilters, vaccineFilters } from './filters'
+export { VaccineFilters } from "./filters";
+export { createVaccineColumns } from "./columns";

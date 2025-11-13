@@ -1,52 +1,34 @@
-'use client'
+"use client";
 
-import { useMemo } from 'react'
-import { Plus } from 'lucide-react'
-import type { Breed } from "@/shared/types"
-import { useCrud } from '@/shared/hooks/use-crud'
-import { useI18n } from "@/shared/hooks/use-i18n"
-import { useBreeds } from '@/shared/hooks/queries'
-import { createBreedColums } from '@/entities/breeds'
-import { Button } from '@/shared/components/ui/button'
-import { DataTable } from '@/shared/components/data-table'
-import { BreedForm, BreedSchema } from '@/features/breeds'
-import { Drawer } from '@/shared/components/elements/drawer'
-import { breedsControllerCreate, breedsControllerFindAll, breedsControllerRemove, breedsControllerUpdate } from '@/shared/api'
+import { useMemo } from "react";
+import type { Breed } from "@/shared/types";
+import { useCrud } from "@/shared/hooks/use-crud";
+import { useI18n } from "@/shared/hooks/use-i18n";
+import { createBreedColumns } from "@/entities/breeds";
+import { DataTable } from "@/shared/components/data-table";
+import { BreedForm, BreedSchema } from "@/features/breeds";
+import { Modal } from "@/shared/components/elements/modal";
+import { useGetBreeds } from "@/entities/breeds/services/breed-queries";
+import { useCreateBreed, useDeleteBreed, useUpdateBreed } from "@/entities/breeds/services/breed-mutations";
 
 export default function Breeds() {
-    const { t } = useI18n()
-    const { breeds } = useBreeds()
+  const { t } = useI18n();
 
-    const { dialog, itemId, items, loading, totalItems, handleClose, handleDelete, handleEditItem, handleGetItems, onSubmit, setDialog } = useCrud<Breed, BreedSchema, BreedSchema>({
-        findAll: breedsControllerFindAll,
-        create: breedsControllerCreate as any,
-        update: breedsControllerUpdate,
-        remove: breedsControllerRemove,
-    })
+  const { dialog, editedItem, createButton, handleClose, handleDelete, handleEditItem, onSubmit } = useCrud<Breed, BreedSchema, BreedSchema>({
+    createMutation: useCreateBreed,
+    updateMutation: useUpdateBreed,
+    removeMutation: useDeleteBreed,
+  });
 
-    const columns = useMemo(() => createBreedColums(handleEditItem, handleDelete, t), [handleEditItem, handleDelete])
+  const columns = useMemo(() => createBreedColumns(handleEditItem, handleDelete, t), [handleEditItem, handleDelete]);
 
-    return (
-        <div>
-            <DataTable
-                loading={loading}
-                columns={columns}
-                items={items as any}
-                totalItems={totalItems}
-                callback={handleGetItems}
-                topSlot={<Button onClick={() => setDialog(true)} size={'sm'} className="mt-0! w-full sm:w-fit">
-                    <Plus />
-                    {t('management.createBreed')}
-                </Button>}
-            />
+  return (
+    <div>
+      <DataTable columns={columns} queryFunction={useGetBreeds} topSlot={createButton(t("management.createBreed"))} />
 
-            <Drawer
-                open={dialog}
-                title={t(itemId? "management.editBreed" : 'management.createBreed')}
-                onClose={handleClose}>
-                
-                <BreedForm breeds={breeds} onSubmit={onSubmit} defaultValues={itemId?items.find(i => i.id === itemId):undefined as any} />
-            </Drawer>
-        </div>
-    )
+      <Modal open={dialog} title={t(editedItem ? "management.editBreed" : "management.createBreed")} onClose={handleClose}>
+        <BreedForm onSubmit={onSubmit} defaultValues={editedItem ? editedItem : (undefined as any)} />
+      </Modal>
+    </div>
+  );
 }

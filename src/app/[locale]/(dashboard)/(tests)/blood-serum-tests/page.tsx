@@ -1,63 +1,48 @@
-'use client'
+"use client";
 
-import { useMemo } from 'react'
-import { Plus } from 'lucide-react'
-import { useI18n } from '@/shared/hooks/use-i18n'
-import { useSearchParams } from "next/navigation"
-import { useCrud } from '@/shared/hooks/use-crud'
-import type { BloodSerumTest } from "@/shared/types"
-import { Button } from '@/shared/components/ui/button'
-import { DataTable } from '@/shared/components/data-table'
-import { Drawer } from '@/shared/components/elements/drawer'
-import { useRouter, usePathname } from "@/shared/i18n/routing"
-import { createBloodSerumTestColums } from '@/entities/blood-serum-tests'
-import { BloodSerumTestForm, BloodSerumTestSchema } from '@/features/blood-serum-tests'
-import { bloodSerumTestsControllerCreate, bloodSerumTestsControllerFindAll, bloodSerumTestsControllerRemove, bloodSerumTestsControllerUpdate } from '@/shared/api'
+import { useMemo } from "react";
+import { useI18n } from "@/shared/hooks/use-i18n";
+import { useCrud } from "@/shared/hooks/use-crud";
+import type { BloodSerumTest } from "@/shared/types";
+import { QUERY_PARAM_KEYS } from "@/shared/constants";
+import { DataTable } from "@/shared/components/data-table";
+import { Modal } from "@/shared/components/elements/modal";
+import { useSearchQueryParams } from "@/shared/hooks/use-query-params";
+import { createBloodSerumTestColumns } from "@/entities/blood-serum-tests";
+import { BloodSerumTestForm, BloodSerumTestSchema } from "@/features/blood-serum-tests";
+import { useGetBloodSerumTests } from "@/entities/blood-serum-tests/services/queries";
+import { useCreateBloodSerumTest, useDeleteBloodSerumTest, useUpdateBloodSerumTest } from "@/entities/blood-serum-tests/services/mutations";
 
 export default function BloodSerumTests() {
-    const router = useRouter()
-    const pathname = usePathname()
-    const { t, locale } = useI18n()
-    const query = useSearchParams()
-    const newAnimal = query.get('new')
-    const animalId = query.get('animalId') ? Number(query.get('animalId')) : null
+  const { t, locale } = useI18n();
+  const { get, setMany } = useSearchQueryParams();
+  const newAnimal = get("new");
+  const animalId = get("animalId", true);
 
-    const { dialog, itemId, items, loading, totalItems, handleClose, handleDelete, handleEditItem, handleGetItems, onSubmit, setDialog } = useCrud<BloodSerumTest, BloodSerumTestSchema, BloodSerumTestSchema>({
-        dialogValue: !!newAnimal,
-        findAll: bloodSerumTestsControllerFindAll,
-        create: bloodSerumTestsControllerCreate as any,
-        update: bloodSerumTestsControllerUpdate,
-        remove: bloodSerumTestsControllerRemove,
-        extraOnClose: () => newAnimal && router.push(pathname + ( animalId ? '?animalId='+animalId : ''))
-    })
+  const { dialog, editedItem, createButton, handleClose, handleDelete, handleEditItem, onSubmit } = useCrud<BloodSerumTest, BloodSerumTestSchema, BloodSerumTestSchema>({
+    dialogValue: !!newAnimal,
+    createMutation: useCreateBloodSerumTest,
+    updateMutation: useUpdateBloodSerumTest,
+    removeMutation: useDeleteBloodSerumTest,
+    extraOnClose: () => {
+      if(!newAnimal) return
 
-    const columns = useMemo(() => createBloodSerumTestColums(handleEditItem, handleDelete, t, locale), [handleEditItem, handleDelete])
+      setMany({
+        [QUERY_PARAM_KEYS.NEW]: null,
+        [QUERY_PARAM_KEYS.ANIMAL_ID]: animalId || null
+      })
+    }
+  });
 
-    return (
-        <div>
-            <DataTable
-                loading={loading}
-                columns={columns}
-                items={items as any}
-                totalItems={totalItems}
-                callback={handleGetItems}
-                topSlot={<Button onClick={() => setDialog(true)} size={'default'} className="mt-0! w-full sm:w-fit">
-                    <Plus />
-                    {t('inspections.createBloodSerumTest')}
-                </Button>}
-            />
+  const columns = useMemo(() => createBloodSerumTestColumns(handleEditItem, handleDelete, t, locale), [handleEditItem, handleDelete]);
 
-            <Drawer
-                open={dialog}
-                onClose={handleClose}
-                widthClassName='max-w-[600px]!'
-                title={t(itemId?"inspections.editBloodSerumTest":"inspections.createBloodSerumTest")}>
-                <BloodSerumTestForm
-                    animalId={animalId}
-                    onSubmit={onSubmit}
-                    defaultValues={itemId?items.find(i => i.id === itemId):undefined}
-                />
-            </Drawer>
-        </div>
-    )
+  return (
+    <div>
+      <DataTable columns={columns} queryFunction={useGetBloodSerumTests} topSlot={createButton(t("inspections.createBloodSerumTest"))} />
+
+      <Modal open={dialog} onClose={handleClose} widthClassName="max-w-[700px]!" title={t(editedItem ? "inspections.editBloodSerumTest" : "inspections.createBloodSerumTest")}>
+        <BloodSerumTestForm onSubmit={onSubmit} animalId={animalId as number} defaultValues={editedItem ? editedItem : undefined} />
+      </Modal>
+    </div>
+  );
 }
