@@ -126,7 +126,6 @@ export function PredictInfoTable({ id }: Props) {
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-sm md:text-base">
-            <LineChart className="size-5 md:size-6" />
             {t("aiPredictionResult")}
           </CardTitle>
 
