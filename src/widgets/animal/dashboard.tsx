@@ -17,6 +17,7 @@ import { useGetLastBloodSerumTest } from "@/entities/blood-serum-tests/services/
 import { useGetLastGeneralBloodTest } from "@/entities/general-blood-tests/services/queries";
 import { useGetLastGeneralInspection } from "@/entities/general-inspections/services/queries";
 import { ANIMAL_GENDERS, OBESITY_TYPES, BODY_TYPES, CUSTOMER_TYPES, POSITIONS, BODY_STRUCTURES } from "@/shared/constants";
+import { PredictInfoTable } from "./predict-info-table";
 
 // TODO: fix create links
 // TODO: i18n
@@ -169,6 +170,8 @@ export function AnimalDashboard({ id }: { id: number }) {
             </Table>
           </CardContent>
         </Card>
+
+        <PredictInfoTable id={id} />
 
         <Card className="shadow-none rounded">
           <CardHeader>

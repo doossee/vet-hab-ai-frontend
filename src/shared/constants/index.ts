@@ -29,8 +29,8 @@ import {
 export const TABLE_QUERY_PARAMS = {
   PAGE: "page",
   SEARCH: "search",
-  PER_PAGE: "perPage"
-}
+  PER_PAGE: "perPage",
+};
 
 export const THEMES = [
   { name: "light", icon: Sun },
@@ -57,6 +57,236 @@ export const BREED = [
   { uz: "Sut", ru: "Молоко", value: "MILK" },
   { uz: "Go'sht", ru: "Мясо", value: "MEAT" },
 ];
+
+export const BLOOD_TEST_FIELDS = {
+  // Морфологическое исследование крови
+  coe: { ru: "СОЭ", uz: "COE", unit_ru: "Мм/ч", unit_uz: "mm/soat" },
+  erythrocyteCount: {
+    ru: "Количество эритроцитов",
+    uz: "Eritrotsitlar soni",
+    unit_ru: "млн/мкл",
+    unit_uz: "mln/mkL",
+  },
+  leukocyteCount: {
+    ru: "Количество лейкоцитов",
+    uz: "Leykotsitlar soni",
+    unit_ru: "тыс./мкл",
+    unit_uz: "ming/mkL",
+  },
+  thrombocyteCount: {
+    ru: "Количество тромбоцитов",
+    uz: "Trombotsitlar soni",
+    unit_ru: "тыс./мкл",
+    unit_uz: "ming/mkL",
+  },
+  hemoglobin: {
+    ru: "Гемоглобин",
+    uz: "Gemoglobin",
+    unit_ru: "г/л",
+    unit_uz: "g/L",
+  },
+  glutathione: {
+    ru: "Глутатион",
+    uz: "Glutation",
+    unit_ru: "ммоль/л",
+    unit_uz: "mmol/L",
+  },
+  waterPercentage: {
+    ru: "Процент воды",
+    uz: "Suv foizi",
+    unit_ru: "%",
+    unit_uz: "%",
+  },
+  dryResidue: {
+    ru: "Процент сухого остатка",
+    uz: "Quruq qoldiq foizi",
+    unit_ru: "%",
+    unit_uz: "%",
+  },
+  
+  // Исследование сыворотки крови
+  totalProtein: {
+    ru: "Общий белок сыворотки",
+    uz: "Umumiy oqsil",
+    unit_ru: "г/л",
+    unit_uz: "g/L",
+  },
+  totalCalcium: {
+    ru: "Общий кальций",
+    uz: "Umumiy kalsiy",
+    unit_ru: "ммоль/л",
+    unit_uz: "mmol/L",
+  },
+  organicPhosphorus: {
+    ru: "Органический фосфор",
+    uz: "Organik fosfor",
+    unit_ru: "ммоль/л",
+    unit_uz: "mmol/L",
+  },
+  albumin: { ru: "Альбумин", uz: "Albumin", unit_ru: "%", unit_uz: "%" },
+  alphaGlobulin: {
+    ru: "Альфа-глобулин",
+    uz: "Alfa globulin",
+    unit_ru: "%",
+    unit_uz: "%",
+  },
+  betaGlobulin: {
+    ru: "Бета-глобулин",
+    uz: "Beta globulin",
+    unit_ru: "%",
+    unit_uz: "%",
+  },
+  gammaGlobulin: {
+    ru: "Гамма-глобулин",
+    uz: "Gamma globulin",
+    unit_ru: "%",
+    unit_uz: "%",
+  },
+  residualNitrogen: {
+    ru: "Остаточный азот",
+    uz: "Qoldiq azot",
+    unit_ru: "ммоль/л",
+    unit_uz: "mmol/L",
+  },
+  urea: {
+    ru: "Мочевина",
+    uz: "Karbamid",
+    unit_ru: "ммоль/л",
+    unit_uz: "mmol/L",
+  },
+  uricAcid: {
+    ru: "Мочевая кислота",
+    uz: "Karbamid kislotasi",
+    unit_ru: "ммоль/л",
+    unit_uz: "mmol/L",
+  },
+  creatine: {
+    ru: "Креатин",
+    uz: "Kreatin",
+    unit_ru: "мкмоль/л",
+    unit_uz: "µmol/L",
+  },
+  creatinine: {
+    ru: "Креатинин",
+    uz: "Kreatinin",
+    unit_ru: "мкмоль/л",
+    unit_uz: "µmol/L",
+  },
+  alkalineReserve: {
+    ru: "Щелочной резерв",
+    uz: "Ishqoriy zahira",
+    unit_ru: "Об%CO²",
+    unit_uz: "Ob%CO²",
+  },
+  glucose: {
+    ru: "Глюкоза",
+    uz: "Glyukoza",
+    unit_ru: "ммоль/л",
+    unit_uz: "mmol/L",
+  },
+  ketoneBodies: {
+    ru: "Кетоновые тела",
+    uz: "Keton tanachalari",
+    unit_ru: "г/л",
+    unit_uz: "g/l",
+  },
+  totalBilirubin: {
+    ru: "Общий билирубин",
+    uz: "Umumiy Bilirubin",
+    unit_ru: "мкмоль/л",
+    unit_uz: "µmol/L",
+  },
+  directBilirubin: {
+    ru: "Прямой билирубин",
+    uz: "To'g'ri bilirubin",
+    unit_ru: "мкмоль/л",
+    unit_uz: "µmol/L",
+  },
+  totalCholesterol: {
+    ru: "Общий холестерин",
+    uz: "Umumiy Xolestrin",
+    unit_ru: "ммоль/л",
+    unit_uz: "mmol/L",
+  },
+  totalLipids: {
+    ru: "Общие липиды",
+    uz: "Umumiy lipidlar",
+    unit_ru: "г/л",
+    unit_uz: "g/L",
+  },
+  phospholipids: {
+    ru: "Фосфолипиды",
+    uz: "Fosfolipidlar",
+    unit_ru: "г/л",
+    unit_uz: "g/l",
+  },
+  lacticAcid: {
+    ru: "Молочная кислота",
+    uz: "Sut kislotasi",
+    unit_ru: "ммоль/л",
+    unit_uz: "mmol/L",
+  },
+  pyruvicAcid: {
+    ru: "Пировиноградная кислота",
+    uz: "Pirouzum kislotasi",
+    unit_ru: "ммоль/л",
+    unit_uz: "mmol/L",
+  },
+  citricAcid: {
+    ru: "Лимонная кислота",
+    uz: "Limon kislotasi",
+    unit_ru: "ммоль/л",
+    unit_uz: "mmol/L",
+  },
+  carotene: {
+    ru: "Каротин",
+    uz: "Karotin",
+    unit_ru: "мкмоль/л",
+    unit_uz: "µmol/L",
+  },
+  vitaminA: {
+    ru: "Витамин А",
+    uz: "A vitamin",
+    unit_ru: "мкмоль/л",
+    unit_uz: "µmol/L",
+  },
+  vitaminB: {
+    ru: "Витамин Б",
+    uz: "B vitamin",
+    unit_ru: "мкмоль/л",
+    unit_uz: "µmol/L",
+  },
+  vitaminC: {
+    ru: "Витамин С",
+    uz: "C vitamin",
+    unit_ru: "мкмоль/л",
+    unit_uz: "µmol/L",
+  },
+  copper: {
+    ru: "Медь",
+    uz: "Mis",
+    unit_ru: "ммоль/л",
+    unit_uz: "mmol/l",
+  },
+  cobalt: {
+    ru: "Кобальт",
+    uz: "Kobalt",
+    unit_ru: "ммоль/л",
+    unit_uz: "mmol/l",
+  },
+  manganese: {
+    ru: "Марганец",
+    uz: "Marganets",
+    unit_ru: "ммоль/л",
+    unit_uz: "mmol/l",
+  },
+  zinc: {
+    ru: "Цинк",
+    uz: "Rux",
+    unit_ru: "ммоль/л",
+    unit_uz: "mmol/l",
+  },
+};
 
 export const BLOOD_SERUM_TESTS = {
   totalProtein: {
@@ -349,83 +579,89 @@ export const ALERT_MESSAGES = {
 };
 
 export type NavLink = {
-  title: string
-  icon: any
-  isActive?: boolean
-  url?: string
-  items?: NavLink[]
-}
+  title: string;
+  icon: any;
+  isActive?: boolean;
+  url?: string;
+  hideInNav?: boolean;
+  items?: NavLink[];
+};
+
+export const allLinks = {};
+
+export const managementLinks = [
+  {
+    title: "nav.animalTypes",
+    icon: PawPrint,
+    url: "/animal-types",
+  },
+  {
+    title: "nav.breeds",
+    icon: Ham,
+    url: "/breeds",
+  },
+  {
+    title: "nav.vaccineTypes",
+    icon: Cross,
+    url: "/vaccine-types",
+  },
+  {
+    title: "nav.diseaseTypes",
+    icon: Activity,
+    url: "/disease-types",
+  },
+
+  {
+    title: "nav.animalColors",
+    icon: Palette,
+    url: "/animal-colors",
+  },
+  {
+    title: "nav.urineColors",
+    icon: Palette,
+    url: "/urine-colors",
+  },
+  {
+    title: "nav.dungColors",
+    icon: Palette,
+    url: "/dung-colors",
+  },
+
+  {
+    title: "nav.regions",
+    icon: Map,
+    url: "/regions",
+  },
+  {
+    title: "nav.districts",
+    icon: MapPinned,
+    url: "/districts",
+  },
+  {
+    title: "nav.vetstations",
+    icon: MapPin,
+    url: "/vetstations",
+  },
+
+  {
+    title: "nav.eyeLid",
+    icon: ScanEye,
+    url: "/eye-lid",
+  },
+  {
+    title: "nav.leatherCover",
+    icon: Disc,
+    url: "/leather-cover",
+  },
+];
 
 export const navLinksVariant: Record<UserRole, NavLink[]> = {
   ADMIN: [
     {
       title: "nav.management",
       icon: FolderCog,
-      items: [
-        {
-          title: "nav.animalTypes",
-          icon: PawPrint,
-          url: "/animal-types",
-        },
-        {
-          title: "nav.breeds",
-          icon: Ham,
-          url: "/breeds",
-        },
-        {
-          title: "nav.vaccineTypes",
-          icon: Cross,
-          url: "/vaccine-types",
-        },
-        {
-          title: "nav.diseaseTypes",
-          icon: Activity,
-          url: "/disease-types",
-        },
-
-        {
-          title: "nav.animalColors",
-          icon: Palette,
-          url: "/animal-colors",
-        },
-        {
-          title: "nav.urineColors",
-          icon: Palette,
-          url: "/urine-colors",
-        },
-        {
-          title: "nav.dungColors",
-          icon: Palette,
-          url: "/dung-colors",
-        },
-
-        {
-          title: "nav.regions",
-          icon: Map,
-          url: "/regions",
-        },
-        {
-          title: "nav.districts",
-          icon: MapPinned,
-          url: "/districts",
-        },
-        {
-          title: "nav.vetstations",
-          icon: MapPin,
-          url: "/vetstations",
-        },
-
-        {
-          title: "nav.eyeLid",
-          icon: ScanEye,
-          url: "/eye-lid",
-        },
-        {
-          title: "nav.leatherCover",
-          icon: Disc,
-          url: "/leather-cover",
-        },
-      ],
+      hideInNav: true,
+      items: managementLinks,
     },
     {
       title: "nav.users",
@@ -664,10 +900,10 @@ export const SKELETON_TYPES = {
   card: "h-40 w-full rounded-xl",
   input: "h-10 w-full rounded-md",
   image: "h-48 w-full rounded-xl",
-}
+};
 
 export const QUERY_PARAM_KEYS = {
   ANIMAL_ID: "animalId",
   NEW: "new",
   ID: "id",
-}
+};

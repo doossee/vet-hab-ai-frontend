@@ -3,11 +3,20 @@ import { AnimalQueryKeys } from "../utils/constants/query-keys";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { paramsToQueryKeys } from "@/shared/helpers/params-to-keys";
 import { animalsControllerFindOne, animalsControllerFindAll } from "@/shared/api";
+import { getPredict } from "@/shared/api/predict";
 
 export function useGetAnimal(id: string | number, enabled?: boolean) {
   return useQuery<Animal, Error>({
     queryKey: [AnimalQueryKeys.ANIMALS, id],
     queryFn: async () => animalsControllerFindOne(id) as Promise<Animal>,
+    enabled,
+  });
+}
+
+export function useGetAnimalPredict(id: number, body: { params: number[] }, enabled?: boolean) {
+  return useQuery<Record<string, number>, Error>({
+    queryKey: [AnimalQueryKeys.ANIMALS_PREDICT_INFO, id],
+    queryFn: async () => getPredict(body) as any,
     enabled,
   });
 }

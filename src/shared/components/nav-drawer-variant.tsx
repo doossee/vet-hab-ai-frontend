@@ -5,7 +5,7 @@ import { cn } from "@/shared/lib/utils";
 import { useTranslations } from "next-intl";
 import { usePathname, Link } from "@/shared/i18n/routing";
 import { useAuthData } from "@/shared/hooks/use-auth-data";
-import { ChevronRight, SquareActivity } from "lucide-react";
+import { ChevronRight, Microscope, SquareActivity } from "lucide-react";
 import { NavLink, navLinksVariant } from "@/shared/constants";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible";
 import {
@@ -31,7 +31,7 @@ export function AppSidebar() {
   const { toggleSidebar, isMobile } = useSidebar();
 
   const links = useCallback(() => {
-    return navLinksVariant?.[userData?.userRole!] || []
+    return navLinksVariant?.[userData?.userRole!]?.filter(l => !l.hideInNav) || []
   }, [userData]);
 
   const isOpen = useCallback(
@@ -55,7 +55,7 @@ export function AppSidebar() {
             <SidebarMenuButton size="lg" asChild>
               <div className="flex items-center gap-2">
                 <div className="bg-primary text-primary-foreground flex aspect-square size-8 items-center justify-center rounded">
-                  <SquareActivity className="size-5" />
+                  <Microscope className="size-5" />
                 </div>
                 <div className="pt-1 flex flex-col gap-0.5 leading-none text-nowrap">
                   <span className="font-medium">VET-CRM</span>

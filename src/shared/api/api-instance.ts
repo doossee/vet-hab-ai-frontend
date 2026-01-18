@@ -6,6 +6,8 @@ import Axios, { AxiosError, AxiosResponse, AxiosRequestConfig } from "axios";
 
 // const baseURL = '/api'
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+const predictUrl = process.env.NEXT_PUBLIC_PREDICT_BASE_URL;
+
 // console.log(baseURL)
 const { accessToken, refreshToken, setAuthData } = useAuthData();
 
@@ -16,6 +18,13 @@ const processQueue = (token: string | null, _: any = null) => {
   failedQueue.forEach((callback) => (token ? callback(token) : callback(null as any)));
   failedQueue = [];
 };
+
+export const predictApiInstance = Axios.create({
+  baseURL: predictUrl,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
 export const apiInstance = Axios.create({
   baseURL,
