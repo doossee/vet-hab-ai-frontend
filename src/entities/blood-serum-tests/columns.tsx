@@ -15,7 +15,7 @@ export const createBloodSerumTestColumns = (handleEditItem: (item: BloodSerumTes
     key,
     title: BLOOD_SERUM_TESTS[key as BLOOD_SERUM][locale],
     render: (item: BloodSerumTest) => {
-      return <span className="text-right">{item[key as BLOOD_SERUM] + " " + BLOOD_SERUM_TESTS[key as BLOOD_SERUM][`unit_${locale}`]}</span>;
+      return <span className="text-right">{(item[key as BLOOD_SERUM] ?? "-") + " " + BLOOD_SERUM_TESTS[key as BLOOD_SERUM][`unit_${locale}`]}</span>;
     },
   })),
   {

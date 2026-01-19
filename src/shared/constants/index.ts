@@ -404,6 +404,30 @@ export const BLOOD_SERUM_TESTS = {
     unit_ru: "ммоль/л",
     unit_uz: "mmol/L",
   },
+  copper: {
+    ru: "Медь",
+    uz: "Mis",
+    unit_ru: "мкг/дл",
+    unit_uz: "µg/dL",
+  },
+  cobalt: {
+    ru: "Кобальт",
+    uz: "Kobalt",
+    unit_ru: "мкг/дл",
+    unit_uz: "µg/dL",
+  },
+  manganese: {
+    ru: "Марганец",
+    uz: "Manganez",
+    unit_ru: "мкг/дл",
+    unit_uz: "µg/dL",
+  },
+  zinc: {
+    ru: "Цинк",
+    uz: "Tsink",
+    unit_ru: "мкг/дл",
+    unit_uz: "µg/dL",
+  },
 };
 
 export const GENERAL_BLOOD_TESTS = {

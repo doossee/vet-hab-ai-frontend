@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
 export function useIsClient() {
-  const [isClient, setIsCleint] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsCleint(true);
+    setIsClient(true);
   }, []);
 
   return isClient;

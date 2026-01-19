@@ -41,7 +41,7 @@ export const createAnimalColumns = (handleEditItem: (item: Animal) => void, hand
   {
     title: t("animals.breed"),
     key: "breed",
-    sorting: "byBreed",
+    sorting: "byBreedId",
     render(item: Animal) {
       return item.breed?.name;
     },

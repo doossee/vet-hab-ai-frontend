@@ -197,6 +197,10 @@ export interface BloodSerumTest {
   citricAcid?: number | null;
   urea?: number | null;
   ureaAcid?: number | null;
+  copper?: number | null;
+  cobalt?: number | null;
+  manganese?: number | null;
+  zinc?: number | null;
   animalId: number;
   animal: Animal;
   createdAt: Date;

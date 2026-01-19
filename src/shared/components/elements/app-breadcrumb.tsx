@@ -52,7 +52,7 @@ export function AppBreadcrumb() {
   if (!isClient || !userData) return null;
 
   return (
-    <Breadcrumb className="bg-card py-1.5 px-3 border rounded">
+    <Breadcrumb className="bg-card py-1.5 px-3 border rounded-md">
       <BreadcrumbList>
         {items.map((path, index) => (
           <Fragment key={index}>

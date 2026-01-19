@@ -52,9 +52,9 @@ export function AppSidebar() {
       <SidebarHeader className="bg-card">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
+            <SidebarMenuButton size="lg" asChild className="hover:bg-transparent active:bg-transparent">
               <div className="flex items-center gap-2">
-                <div className="bg-primary text-primary-foreground flex aspect-square size-8 items-center justify-center rounded">
+                <div className="bg-primary text-primary-foreground flex aspect-square size-8 items-center justify-center rounded-md">
                   <Microscope className="size-5" />
                 </div>
                 <div className="pt-1 flex flex-col gap-0.5 leading-none text-nowrap">

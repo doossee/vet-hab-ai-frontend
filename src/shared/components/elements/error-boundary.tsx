@@ -46,15 +46,15 @@ export function ErrorSender() {
     });
   };
 
-  useEffect(() => {
-    window.addEventListener("error", handleError);
-    window.addEventListener("unhandledrejection", handleRejection);
+  // useEffect(() => {
+  //   window.addEventListener("error", handleError);
+  //   window.addEventListener("unhandledrejection", handleRejection);
 
-    return () => {
-      window.removeEventListener("error", handleError);
-      window.removeEventListener("unhandledrejection", handleRejection);
-    };
-  }, [])
+  //   return () => {
+  //     window.removeEventListener("error", handleError);
+  //     window.removeEventListener("unhandledrejection", handleRejection);
+  //   };
+  // }, [])
 
   return null
 }

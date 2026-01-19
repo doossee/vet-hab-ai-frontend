@@ -1392,6 +1392,14 @@ export interface UpdateBloodSerumTestDto {
   urea?: number;
   /** The uric acid level in the blood serum (mg/dL). */
   ureaAcid?: number;
+  /** The copper level in the blood serum (µg/dL). */
+  copper?: number;
+  /** The cobalt level in the blood serum (µg/dL). */
+  cobalt?: number;
+  /** The manganese level in the blood serum (µg/dL). */
+  manganese?: number;
+  /** The zinc level in the blood serum (µg/dL). */
+  zinc?: number;
   /** The vitamin A concentration in the blood serum (µg/dL). */
   vitaminA?: number;
   /** The vitamin B concentration in the blood serum (µg/dL). */
@@ -1443,6 +1451,14 @@ export interface BloodSerumTestEntity {
   urea: number;
   /** The uric acid level in the blood serum (mg/dL). */
   ureaAcid: number;
+  /** The copper level in the blood serum (µg/dL). */
+  copper: number;
+  /** The cobalt level in the blood serum (µg/dL). */
+  cobalt: number;
+  /** The manganese level in the blood serum (µg/dL). */
+  manganese: number;
+  /** The zinc level in the blood serum (µg/dL). */
+  zinc: number;
   /** The vitamin A concentration in the blood serum (µg/dL). */
   vitaminA: number;
   /** The vitamin B concentration in the blood serum (µg/dL). */
@@ -1493,6 +1509,14 @@ export interface CreateBloodSerumTestDto {
   urea: number;
   /** The uric acid level in the blood serum (mg/dL). */
   ureaAcid: number;
+  /** The copper level in the blood serum (µg/dL). */
+  copper: number;
+  /** The cobalt level in the blood serum (µg/dL). */
+  cobalt: number;
+  /** The manganese level in the blood serum (µg/dL). */
+  manganese: number;
+  /** The zinc level in the blood serum (µg/dL). */
+  zinc: number;
   /** The vitamin A concentration in the blood serum (µg/dL). */
   vitaminA: number;
   /** The vitamin B concentration in the blood serum (µg/dL). */
