@@ -30,4 +30,5 @@ export const routes = {
   INSPECTIONS: "/inspections",
   URINE_TESTS: "/urine-tests",
   VACCINES: "/vaccines",
+  RUMEN_TESTS: "/rumen-tests",
 };

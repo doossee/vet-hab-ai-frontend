@@ -239,6 +239,20 @@ export interface DungTest {
   updatedAt: Date;
 }
 
+export interface RumenTest {
+  id: number;
+  animalId?: number | null;
+  animal?: Animal | null;
+  diseaseId?: number | null;
+  disease?: Disease | null;
+  date: Date;
+  conclusion?: string | null;
+  infusoriaCount: number;
+  scarFluidState: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface Region {
   id: number;
   name: string;

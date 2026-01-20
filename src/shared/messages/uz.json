@@ -27,7 +27,8 @@
     "vaccines": "Vaksinalar",
     "generalInspections": "Umumiy tekshiruvlar",
     "generalBloodTests": "Qonni morfologik tekshiruvi",
-    "bloodSerumTests": "Qon serum tekshiruvi"
+    "bloodSerumTests": "Qon serum tekshiruvi",
+    "rumenTests": "Qorin tahlillari"
   },
   "theme": {
     "light": "Yorug'",
@@ -219,6 +220,12 @@
     "createVaccine": "Vaksina yaratish",
     "editVaccine": "Vaksinani o'zgartirish"
   },
+  "rumenTests": {
+    "createRumenTest": "Qorin tahlili yaratish",
+    "editRumenTest": "Qorin tahlilini o'zgartirish",
+    "infusoriaCount": "Infuzoriya miqdori (1000/ml)",
+    "scarFluidState": "Qorin suyuqligi holati (pH)"
+  },
   "required": {
     "breedNameRequired": "Zot nomi kiritilishi shart",
     "bodyPositionRequired": "Tananing holat pozasi belgilanishi shart",
@@ -256,6 +263,8 @@
     "respiratoryRateGreetThan0": "Nafas soni 0 dan katta qiymat kiritilshi shart",
     "wormsGreetThan0": "Gijja 0 dan katta qiymat kiritilishi shart",
     "consistencyGreetThan0": "Konsentratsiya 0 dan katta qiymat kiritilishi shart",
+    "infusoriaCountGreetThan0": "Infuzoriya miqdori 0 dan katta yoki teng bo'lishi kerak",
+    "scarFluidStateGreetThan0": "Qorin suyuqligi holati 0 dan katta yoki teng bo'lishi kerak",
     "moreThan0": "0 dan katta qiymant kiritilishi shart",
     "dateRequired": "Vaqt kiritilishi shart",
     "animalRequired": "Hayvon belgilanishi shart",

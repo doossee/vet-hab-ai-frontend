@@ -27,7 +27,8 @@
     "vaccines": "Вакцины",
     "generalInspections": "Общие проверки",
     "generalBloodTests": "Морфологическое исследование крови",
-    "bloodSerumTests": "Анализы сыворотки крови"
+    "bloodSerumTests": "Анализы сыворотки крови",
+    "rumenTests": "Анализы рубца"
   },
   "theme": {
     "light": "Светлая",
@@ -219,6 +220,12 @@
     "createVaccine": "Создать вакцину",
     "editVaccine": "Редактировать вакцину"
   },
+  "rumenTests": {
+    "createRumenTest": "Создать анализ рубца",
+    "editRumenTest": "Редактировать анализ рубца",
+    "infusoriaCount": "Количество инфузорий (1000/мл)",
+    "scarFluidState": "Состояние рубцовой жидкости (pH)"
+  },
   "required": {
     "breedNameRequired": "Название породы обязательно для заполнения",
     "bodyPositionRequired": "Поза и положение тела во внешней среде обязателен для выбора",
@@ -256,6 +263,8 @@
     "respiratoryRateGreetThan0": "Число дыхания должна быть больше 0",
     "wormsGreetThan0": "Количество глистов должно быть больше 0",
     "consistencyGreetThan0": "Консистенция должна быть больше 0",
+    "infusoriaCountGreetThan0": "Количество инфузорий должно быть больше или равно 0",
+    "scarFluidStateGreetThan0": "Состояние рубцовой жидкости должно быть больше или равно 0",
     "moreThan0": "Значение должно быть больше 0",
     "dateRequired": "Дата обязательна для заполнения",
     "animalRequired": "Животное обязательно для выбора",

@@ -757,6 +757,11 @@ export const navLinksVariant: Record<UserRole, NavLink[]> = {
           icon: FlaskRound,
           url: "/blood-serum-tests",
         },
+        {
+          title: "nav.rumenTests",
+          icon: FlaskConical,
+          url: "/rumen-tests",
+        },
       ],
     },
   ],

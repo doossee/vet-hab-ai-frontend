@@ -10,6 +10,7 @@ import { useGetLastGeneralBloodTest } from "@/entities/general-blood-tests/servi
 import { useI18n } from "@/shared/hooks/use-i18n";
 import { BLOOD_TEST_FIELDS } from "@/shared/constants/index";
 import { useGetLastBloodSerumTest } from "@/entities/blood-serum-tests/services/queries";
+import { useGetLastRumenTest } from "@/entities/rumen-tests/services/queries";
 
 type Props = {
   id: number;
@@ -19,9 +20,12 @@ const clinicExamFields = [
   'temperature',
   'pulse',
   'respiratoryRate',
-  'rumination',
-  'rumenFluidState',
-  'rumenInfusoriaCount',
+  'rumination'
+]
+
+const rumenTestFields = [
+  'infusoriaCount',
+  'scarFluidState',
 ]
 
 const bloodExamFields = [
@@ -43,19 +47,24 @@ const bloodExamSerumFields = [
 
 function useExamValues(animalId: number) {
   const { data: clinicData } = useGetLastGeneralInspection(animalId);
-  // const { data: clinicData } = useGetLastGeneralInspection(animalId);
+  const { data: rumenData } = useGetLastRumenTest(animalId);
   const { data: bloodData } = useGetLastGeneralBloodTest(animalId);
   const { data: bloodSerumData } = useGetLastBloodSerumTest(animalId);
+  const params: number[] = [];
 
   const clinicValues = clinicExamFields.reduce((acc, field) => {
     if (clinicData?.inspection && field in clinicData.inspection) {
+      const v = clinicData.inspection[field as keyof GeneralInspection['inspection']];
+      params.push(v);
       acc[field] = clinicData.inspection[field as keyof GeneralInspection['inspection']];
     }
     return acc;
   }, {} as Record<string, any>);
-
+  
   const bloodValues = bloodExamFields.reduce((acc, field) => {
     if (bloodData && field in bloodData) {
+      const v = bloodData[field as keyof GeneralBloodTest];
+      params.push(v);
       acc[field] = bloodData[field as keyof GeneralBloodTest];
     }
     return acc;
@@ -63,12 +72,23 @@ function useExamValues(animalId: number) {
 
   const bloodSerumValues = bloodExamSerumFields.reduce((acc, field) => {
     if (bloodSerumData && field in bloodSerumData) {
+      const v = bloodSerumData[field as keyof BloodSerumTest];
+      params.push(v);
       acc[field] = bloodSerumData[field as keyof BloodSerumTest];
     }
     return acc;
   }, {} as Record<string, any>);
 
-  return { ...bloodValues, ...bloodSerumValues, ...clinicValues };
+  const rumenValues = rumenTestFields.reduce((acc, field) => {
+    if (rumenData && field in rumenData) {
+      const v = rumenData[field as keyof GeneralInspection['inspection']];
+      params.push(v);
+      acc[field] = rumenData[field as keyof GeneralInspection['inspection']];
+    }
+    return acc;
+  }, {} as Record<string, any>);
+
+  return { ...clinicValues, ...bloodValues, ...rumenValues, ...bloodSerumValues, params };
 }
 
 const namesObject = {
@@ -104,9 +124,11 @@ const diseaseNames = {
 export function PredictInfoTable({ id }: Props) {
   const { t, locale } = useI18n();
   const values = useExamValues(id);
-  const params = Object.values(values)
-  console.log(values, params);
-  const { data, isLoading } = useGetAnimalPredict(id, { params }, false);
+  console.log(values);
+  const params = values.params
+  const isEnabledToGetPredict = params.length === 17 && params.every(param => typeof param === 'number');
+
+  const { data, isLoading } = useGetAnimalPredict(id, { params }, isEnabledToGetPredict);
 
   const topDisease = useMemo<{title: string, percent: number}>(() => {
     if (!data) return { title: '', percent: 0 };

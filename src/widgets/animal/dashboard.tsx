@@ -16,6 +16,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui
 import { useGetLastBloodSerumTest } from "@/entities/blood-serum-tests/services/queries";
 import { useGetLastGeneralBloodTest } from "@/entities/general-blood-tests/services/queries";
 import { useGetLastGeneralInspection } from "@/entities/general-inspections/services/queries";
+import { useGetLastRumenTest } from "@/entities/rumen-tests/services/queries";
 import { ANIMAL_GENDERS, OBESITY_TYPES, BODY_TYPES, CUSTOMER_TYPES, POSITIONS, BODY_STRUCTURES } from "@/shared/constants";
 import { PredictInfoTable } from "./predict-info-table";
 
@@ -33,6 +34,7 @@ export function AnimalDashboard({ id }: { id: number }) {
   const { data: bloodSerumTest, isLoading: isBloodSerumTestLoading } = useGetLastBloodSerumTest(id)
   const { data: generalBloodTest, isLoading: isGeneralBloodTestLoading } = useGetLastGeneralBloodTest(id)
   const { data: generalInspection, isLoading: isGeneralInspectionLoading } = useGetLastGeneralInspection(id)
+  const { data: rumenTest, isLoading: isRumenTestLoading } = useGetLastRumenTest(id)
   
   const handleCreateGeneralBloodTest = () => {
     setMany({ animalId: id, new: true }, routes.GENERAL_BLOOD_TESTS)
@@ -52,6 +54,10 @@ export function AnimalDashboard({ id }: { id: number }) {
 
   const handleCreateBloodSerumTest = () => {
     setMany({ animalId: id, new: true }, routes.BLOOD_SERUM_TEST)
+  }
+
+  const handleCreateRumenTest = () => {
+    setMany({ animalId: id, new: true }, routes.RUMEN_TESTS)
   }
 
   return (
@@ -176,6 +182,102 @@ export function AnimalDashboard({ id }: { id: number }) {
         <Card className="shadow-none rounded">
           <CardHeader>
             <div className="flex items-center justify-between">
+              <CardTitle>{t("form.disease")}</CardTitle>
+
+              {disease?.id && (
+                <Button onClick={handleCreateDisease}>
+                  <Plus />
+                  {t("form.add")}
+                </Button>
+              )}
+            </div>
+          </CardHeader>
+          <CardContent className="px-4">
+            {(!disease && !isDiseaseLoading) ? (
+              <EmptyState>
+                <Button onClick={handleCreateDisease}>
+                  <Plus />
+                  {t("form.add")}
+                </Button>
+              </EmptyState>
+            ) : <Table>
+              <TableBody>
+                <TableRow>
+                  <TableCell>
+                    <b>{t("inspections.obesity")}</b>
+                  </TableCell>
+                  <TableCell>
+                    <SkeletonWrapper loading={isDiseaseLoading}>
+                      {disease?.startTime ? new Date(disease.startTime).toLocaleDateString() + "-" + new Date(disease.endTime).toLocaleDateString() : "-"}
+                    </SkeletonWrapper>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <b>{t("inspections.bodyType")}</b>
+                  </TableCell>
+                  <TableCell>
+                    <SkeletonWrapper loading={isDiseaseLoading}>
+                      {disease?.type?.id ? disease.type?.name : "-"}
+                    </SkeletonWrapper>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>}
+          </CardContent>
+        </Card>
+
+        <Card className="shadow-none rounded">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle>{t("animals.vaccine")}</CardTitle>
+
+              {vaccine?.id && (
+                <Button onClick={handleCreateVaccine}>
+                  <Plus />
+                  {t("form.add")}
+                </Button>
+              )}
+            </div>
+          </CardHeader>
+          <CardContent className="px-4">
+            {(!vaccine && !isVaccineLoading) ? (
+              <EmptyState>
+                <Button onClick={handleCreateVaccine}>
+                  <Plus />
+                  {t("form.add")}
+                </Button>
+              </EmptyState>
+            ) : <Table>
+              <TableBody>
+                <TableRow>
+                  <TableCell>
+                    <b>{t("inspections.obesity")}</b>
+                  </TableCell>
+                  <TableCell>
+                    <SkeletonWrapper loading={isVaccineLoading}>
+                      {vaccine?.date ? new Date(vaccine.date).toLocaleDateString() : "-"}
+                    </SkeletonWrapper>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <b>{t("inspections.bodyType")}</b>
+                  </TableCell>
+                  <TableCell>
+                    <SkeletonWrapper loading={isVaccineLoading}>
+                      {vaccine?.type?.id ? vaccine.type.name : "-"}
+                    </SkeletonWrapper>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>}
+          </CardContent>
+        </Card>
+
+        <Card className="shadow-none rounded">
+          <CardHeader>
+            <div className="flex items-center justify-between">
               <CardTitle>{t("animals.generalInspection")}</CardTitle>
 
               {generalInspection?.id && (
@@ -273,102 +375,6 @@ export function AnimalDashboard({ id }: { id: number }) {
                   <TableCell>
                     <SkeletonWrapper loading={isGeneralInspectionLoading}>
                       {generalInspection?.eyelid?.name ? generalInspection.eyelid.name : "-"}
-                    </SkeletonWrapper>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>}
-          </CardContent>
-        </Card>
-
-        <Card className="shadow-none rounded">
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle>{t("form.disease")}</CardTitle>
-
-              {disease?.id && (
-                <Button onClick={handleCreateDisease}>
-                  <Plus />
-                  {t("form.add")}
-                </Button>
-              )}
-            </div>
-          </CardHeader>
-          <CardContent className="px-4">
-            {(!disease && !isDiseaseLoading) ? (
-              <EmptyState>
-                <Button onClick={handleCreateDisease}>
-                  <Plus />
-                  {t("form.add")}
-                </Button>
-              </EmptyState>
-            ) : <Table>
-              <TableBody>
-                <TableRow>
-                  <TableCell>
-                    <b>{t("inspections.obesity")}</b>
-                  </TableCell>
-                  <TableCell>
-                    <SkeletonWrapper loading={isDiseaseLoading}>
-                      {disease?.startTime ? new Date(disease.startTime).toLocaleDateString() + "-" + new Date(disease.endTime).toLocaleDateString() : "-"}
-                    </SkeletonWrapper>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>
-                    <b>{t("inspections.bodyType")}</b>
-                  </TableCell>
-                  <TableCell>
-                    <SkeletonWrapper loading={isDiseaseLoading}>
-                      {disease?.type?.id ? disease.type?.name : "-"}
-                    </SkeletonWrapper>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>}
-          </CardContent>
-        </Card>
-
-        <Card className="shadow-none rounded">
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle>{t("animals.vaccine")}</CardTitle>
-
-              {vaccine?.id && (
-                <Button onClick={handleCreateVaccine}>
-                  <Plus />
-                  {t("form.add")}
-                </Button>
-              )}
-            </div>
-          </CardHeader>
-          <CardContent className="px-4">
-            {(!vaccine && !isVaccineLoading) ? (
-              <EmptyState>
-                <Button onClick={handleCreateVaccine}>
-                  <Plus />
-                  {t("form.add")}
-                </Button>
-              </EmptyState>
-            ) : <Table>
-              <TableBody>
-                <TableRow>
-                  <TableCell>
-                    <b>{t("inspections.obesity")}</b>
-                  </TableCell>
-                  <TableCell>
-                    <SkeletonWrapper loading={isVaccineLoading}>
-                      {vaccine?.date ? new Date(vaccine.date).toLocaleDateString() : "-"}
-                    </SkeletonWrapper>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>
-                    <b>{t("inspections.bodyType")}</b>
-                  </TableCell>
-                  <TableCell>
-                    <SkeletonWrapper loading={isVaccineLoading}>
-                      {vaccine?.type?.id ? vaccine.type.name : "-"}
                     </SkeletonWrapper>
                   </TableCell>
                 </TableRow>
@@ -476,7 +482,73 @@ export function AnimalDashboard({ id }: { id: number }) {
             </Table>}
           </CardContent>
         </Card>
-      </div>
+        <Card className="shadow-none rounded h-min">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle>{t("nav.rumenTests")}</CardTitle>
+
+              {rumenTest?.id && (
+                <Button onClick={handleCreateRumenTest}>
+                  <Plus />
+                  {t("form.add")}
+                </Button>
+              )}
+            </div>
+          </CardHeader>
+          <CardContent className="px-4">
+            {(!rumenTest?.id && !isRumenTestLoading) ? (
+              <EmptyState>
+                <Button onClick={handleCreateRumenTest}>
+                  <Plus />
+                  {t("form.add")}
+                </Button>
+              </EmptyState>
+            ) : <Table>
+              <TableBody>
+                <TableRow>
+                  <TableCell>
+                    <b>{t("form.date")}</b>
+                  </TableCell>
+                  <TableCell>
+                    <SkeletonWrapper loading={isRumenTestLoading}>
+                      {new Date(rumenTest?.createdAt!).toLocaleDateString()}
+                    </SkeletonWrapper>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <b>{t("rumenTests.infusoriaCount")}</b>
+                  </TableCell>
+                  <TableCell>
+                    <SkeletonWrapper loading={isRumenTestLoading}>
+                      {rumenTest?.infusoriaCount ?? "-"}
+                    </SkeletonWrapper>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <b>{t("rumenTests.scarFluidState")}</b>
+                  </TableCell>
+                  <TableCell>
+                    <SkeletonWrapper loading={isRumenTestLoading}>
+                      {rumenTest?.scarFluidState ?? "-"}
+                    </SkeletonWrapper>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <b>{t("inspections.conclusion")}</b>
+                  </TableCell>
+                  <TableCell>
+                    <SkeletonWrapper loading={isRumenTestLoading}>
+                      {rumenTest?.conclusion ?? "-"}
+                    </SkeletonWrapper>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>}
+          </CardContent>
+        </Card>      </div>
     </div>
   );
 }
