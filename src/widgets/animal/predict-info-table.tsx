@@ -96,9 +96,9 @@ const namesObject = {
   temperature: { ru: 'Температура', uz: 'Harorat', unit_ru: '°C', unit_uz: '°C' },
   pulse: { ru: 'Пульс', uz: 'Puls', unit_ru: 'уд/мин', unit_uz: 'zrb/min' },
   respiratoryRate: { ru: 'Частота дыхания', uz: 'Nafas soni', unit_ru: 'раз/мин', unit_uz: 'mrt/min' },
-  rumination: { ru: 'Жвачка', uz: 'Жвачка', unit_ru: 'раз/мин', unit_uz: 'mrt/min' },
-  rumenInfusoriaCount: { ru: 'Количество инфузорий в рубце', uz: 'Qorindagi infuzoriyalar soni', unit_uz: '', unit_ru: '' },
-  rumenFluidState: { ru: 'Состояние рубцовой жидкости', uz: 'Qorin suyuqligi holati', unit_ru: '', unit_uz: '' },
+  rumination: { ru: 'Руминация', uz: 'Ruminatsiya', unit_ru: 'раз/мин', unit_uz: 'mrt/2min' },
+  // rumenInfusoriaCount: { ru: 'Количество инфузорий в рубце', uz: 'Qorindagi infuzoriyalar soni', unit_uz: '', unit_ru: '' },
+  // rumenFluidState: { ru: 'Состояние рубцовой жидкости', uz: 'Qorin suyuqligi holati', unit_ru: '', unit_uz: '' },
 
   // Blood Exam
   erythrocyteCount: BLOOD_TEST_FIELDS.erythrocyteCount,
@@ -112,30 +112,33 @@ const namesObject = {
   cobalt: BLOOD_TEST_FIELDS.cobalt,
   manganese: BLOOD_TEST_FIELDS.manganese,
   zinc: BLOOD_TEST_FIELDS.zinc,
+
+  infusoriaCount: { ru: 'Количество инфузорий в рубце', uz: 'Qorindagi infuzoriyalar soni', unit_uz: '(1000/мл)', unit_ru: '(1000/мл)' },
+  scarFluidState: { ru: 'Состояние рубцовой жидкости', uz: 'Qorin suyuqligi holati', unit_ru: '(pH)', unit_uz: '(pH)' },
 };
 
 const diseaseNames = {
-  Osteodistrafiya: { ru: 'Остеодистрофия', uz: 'Osteodistrofiya' },
-  Gipomikro: { ru: 'Гипомикроз', uz: 'Gipomikroz' },
-  Healthy: { ru: 'Здоровый', uz: 'Sog\'lom' },
-  Ketos: { ru: 'Кетоз', uz: 'Ketoz' },
+  "2 Osteodistrafiya": { ru: 'Остеодистрофия', uz: 'Osteodistrofiya' },
+  "Osteodistrafiya": { ru: 'Остеодистрофия', uz: 'Osteodistrofiya' },
+  "Gipomikro": { ru: 'Гипомикроз', uz: 'Gipomikroz' },
+  "Healthy": { ru: 'Здоровый', uz: 'Sog\'lom' },
+  "Ketos": { ru: 'Кетоз', uz: 'Ketoz' },
 };
 
 export function PredictInfoTable({ id }: Props) {
   const { t, locale } = useI18n();
-  const values = useExamValues(id);
-  console.log(values);
-  const params = values.params
+  const { params, ...values } = useExamValues(id);
+
   const isEnabledToGetPredict = params.length === 17 && params.every(param => typeof param === 'number');
 
   const { data, isLoading } = useGetAnimalPredict(id, { params }, isEnabledToGetPredict);
 
   const topDisease = useMemo<{title: string, percent: number}>(() => {
     if (!data) return { title: '', percent: 0 };
-    const entries = Object.entries(data);
+    const entries = Object.entries(data.data);
     if (!entries.length) return { title: '', percent: 0 };
     const [key, value] = entries.reduce((max, current) => current[1] > max[1] ? current : max);
-    const diseaseKey = key.replace(/^\d+_/, ''); // Remove prefix like "2_"
+    const diseaseKey = key;
     const name = diseaseNames[diseaseKey as keyof typeof diseaseNames];
     return {
       title: name ? name[locale] : diseaseKey,
@@ -172,26 +175,26 @@ export function PredictInfoTable({ id }: Props) {
         {data && <>
           <div className="mb-4 rounded-lg border bg-card-foreground/5 p-3">
             <p className="text-sm">
-              {t("pages.mostLikelyDisease")}
+              {t("mostLikelyDisease")}
             </p>
             <p className="text-lg font-semibold">
               {topDisease.title??"-"} — {topDisease.percent??0}%
             </p>
           </div>
 
-          <div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-4">
-            { Object.entries(values??{}).map(([key, value]) => 
-              <div className="" key={key}>
-                <h2 className="text-xs text-muted-foreground">{namesObject[key as keyof typeof namesObject]?.[locale]}</h2>
-                <p className="font-medium text-xl">
-                  {value}{" "}
-                  <span className="text-xs">{namesObject[key as keyof typeof namesObject]?.[`unit_${locale}`] ?? ''}</span>
-                </p>
-              </div>
-            )}
-            <div className="h-full w-full flex items-end text-muted-foreground">
-              .....
-            </div>
+          <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-4">
+            { Object.entries(namesObject).map(([key, nameObj]) => {
+              const value = values[key as keyof typeof values];
+              return (
+                <div className="" key={key}>
+                  <h2 className="text-xs text-muted-foreground">{nameObj[locale]}</h2>
+                  <p className="font-medium text-xl">
+                    {value ?? '-'}{" "}
+                    <span className="text-xs">{nameObj[`unit_${locale}`]}</span>
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </>}
       </CardContent>

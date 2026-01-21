@@ -288,5 +288,6 @@
     "title": "Maʼlumot topilmadi",
     "description": "Ushbu sahifada hozircha maʼlumot yo‘q. Siz yangi yozuv qo‘shishingiz yoki sahifani yangilashingiz mumkin."
   },
-  "aiPredictionResult": "AI kasallik prognozi natijasi"
+  "aiPredictionResult": "AI kasallik prognozi natijasi",
+  "mostLikelyDisease": "Ehtimoliy kasallik"
 }

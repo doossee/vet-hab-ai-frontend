@@ -32,7 +32,7 @@ export function useUpdateAnimalColor() {
 export function useDeleteAnimalColor() {
   const client = useQueryClient();
 
-  return useMutation<any, any, number | string>({
+  return useMutation<any, any, any>({
     mutationFn: colorsControllerRemove,
     onSuccess: (data) => {
       removeQueryData<Color>(client, [AnimalColorQueryKeys.ANIMAL_COLORS], data.id);

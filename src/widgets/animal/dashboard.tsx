@@ -63,23 +63,23 @@ export function AnimalDashboard({ id }: { id: number }) {
   return (
     <div>
       {/* <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
-                <Button onClick={() => router.push(`/blood-serum-tests?animalId=${id}&new=true`)}>
-                    <FlaskRound size={40} />
-                    <h1 className='text-sm font-bold'>{t('inspections.createBloodSerumTest')}</h1>
-                </Button>
-                <Button onClick={() => router.push(`/general-blood-tests?animalId=${id}&new=true`)}>
-                    <Syringe size={40} />
-                    <h1 className='text-sm font-bold'>{t('inspections.createBloodTest')}</h1>
-                </Button>
-                <Button onClick={() => router.push(`/urine-tests?animalId=${id}&new=true`)}>
-                    <FlaskConical size={40} />
-                    <h1 className='text-sm font-bold'>{t('inspections.createUrineTest')}</h1>
-                </Button>
-                <Button onClick={() => router.push(`/dung-tests?animalId=${id}&new=true`)}>
-                    <Shovel size={40} />
-                    <h1 className='text-sm font-bold'>{t('inspections.createDungTest')}</h1>
-                </Button>
-            </div> */}
+            <Button onClick={() => router.push(`/blood-serum-tests?animalId=${id}&new=true`)}>
+                <FlaskRound size={40} />
+                <h1 className='text-sm font-bold'>{t('inspections.createBloodSerumTest')}</h1>
+            </Button>
+            <Button onClick={() => router.push(`/general-blood-tests?animalId=${id}&new=true`)}>
+                <Syringe size={40} />
+                <h1 className='text-sm font-bold'>{t('inspections.createBloodTest')}</h1>
+            </Button>
+            <Button onClick={() => router.push(`/urine-tests?animalId=${id}&new=true`)}>
+                <FlaskConical size={40} />
+                <h1 className='text-sm font-bold'>{t('inspections.createUrineTest')}</h1>
+            </Button>
+            <Button onClick={() => router.push(`/dung-tests?animalId=${id}&new=true`)}>
+                <Shovel size={40} />
+                <h1 className='text-sm font-bold'>{t('inspections.createDungTest')}</h1>
+            </Button>
+        </div> */}
 
       <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card className="shadow-none rounded">

@@ -3122,7 +3122,7 @@ export const animalTypesControllerRemove = (id: number, options?: SecondParamete
   return createInstance<AnimalTypeEntity>({ url: `/animal-types/${id}`, method: "DELETE" }, options);
 };
 
-export const colorsControllerCreate = (createColorDto: BodyType<CreateColorDto>, options?: SecondParameter<typeof createInstance<ColorEntity>>) => {
+export const colorsControllerCreate = (createColorDto: BodyType<any>, options?: SecondParameter<typeof createInstance<ColorEntity>>) => {
   return createInstance<ColorEntity>({ url: `/colors`, method: "POST", headers: { "Content-Type": "application/json" }, data: createColorDto }, options);
 };
 
