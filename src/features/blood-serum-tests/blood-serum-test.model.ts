@@ -16,7 +16,7 @@ export const createBloodSerumTestSchema = (t: any, locale: "uz" | "ru") => {
   const formSchemaValues: any = {};
 
   Object.keys(BLOOD_SERUM_TESTS).map((key) => {
-    formSchemaValues[key] = z.coerce.number().min(1, BLOOD_SERUM_TESTS[key as BLOOD_SERUM][locale] + " " + t("required.moreThan0"));
+    formSchemaValues[key] = z.coerce.number().min(0, BLOOD_SERUM_TESTS[key as BLOOD_SERUM][locale] + " " + t("required.moreThan0"));
   });
 
   return z.object({
