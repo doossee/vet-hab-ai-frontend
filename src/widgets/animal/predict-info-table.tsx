@@ -121,11 +121,10 @@ const namesObject = {
 };
 
 const diseaseNames = {
-  "2 Osteodistrafiya": { ru: 'Остеодистрофия', uz: 'Osteodistrofiya' },
-  "Osteodistrafiya": { ru: 'Остеодистрофия', uz: 'Osteodistrofiya' },
-  "Gipomikro": { ru: 'Гипомикроз', uz: 'Gipomikroz' },
-  "Healthy": { ru: 'Здоровый', uz: 'Sog\'lom' },
-  "Ketos": { ru: 'Кетоз', uz: 'Ketoz' },
+  "0": { ru: 'Остеодистрофия', uz: 'Osteodistrofiya' },
+  "1": { ru: 'Вторичная остедистрофия', uz: 'Ikkilamchi osteodistrofiya' },
+  "2": { ru: 'Гипомикроэлементоз', uz: 'Gipomikroelementoz' },
+  "3": { ru: 'Кетоз', uz: 'Ketoz' },
 };
 
 export function PredictInfoTable({ id }: Props) {
@@ -146,7 +145,7 @@ export function PredictInfoTable({ id }: Props) {
     return {
       key: diseaseKey,
       title: name ? name[locale] : diseaseKey,
-      percent: parseFloat((value * 100).toFixed(2))
+      percent: (Math.floor(value * 10000) / 100).toFixed(2)
     };
   }, [data, locale]);
 
@@ -191,7 +190,7 @@ export function PredictInfoTable({ id }: Props) {
             <p className="text-sm">
               {t("mostLikelyDisease")}
             </p>
-            <p className={cn("text-lg font-semibold", topDisease.key === "Healthy" ? 'text-green-600' : 'text-red-600')}>
+            <p className={cn("text-lg font-semibold", 'text-red-600')}>
               {topDisease.title??"-"} — {topDisease.percent??0}%
             </p>
             <div className="mt-2 grid md:grid-cols-2 gap-1 pt-2 border-t">
@@ -201,7 +200,7 @@ export function PredictInfoTable({ id }: Props) {
                 .map(([key, value]) => {
                   const name = diseaseNames[key as keyof typeof diseaseNames];
                   const title = name ? name[locale] : key;
-                  const percent = parseFloat((value * 100).toFixed(2));
+                  const percent = (Math.floor(value * 10000) / 100).toFixed(2)
                   return (
                     <div key={key}>
                       <span className="font-medium">{title}</span>: {percent}%
