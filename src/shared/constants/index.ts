@@ -537,7 +537,7 @@ export const OBESITY_TYPES = {
 
 export const BODY_TYPES = {
   WEAK: { ru: "Слабое", uz: "Kuchsiz" },
-  MEDIUM: { ru: "Сильное", uz: "O'rtacha" },
+  MEDIUM: { ru: "Средний", uz: "O'rtacha" },
   STRONG: { ru: "Сильное", uz: "Kuchli" },
 };
 
