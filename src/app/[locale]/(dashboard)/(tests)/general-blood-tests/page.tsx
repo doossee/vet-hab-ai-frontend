@@ -47,7 +47,12 @@ export default function GeneralBloodTests() {
         topSlot={createButton(t("inspections.createBloodTest"))} />
 
       <Modal open={dialog} onClose={handleClose} widthClassName="max-w-[650px]!" title={t(editedItem ? "inspections.editBloodTest" : "inspections.createBloodTest")}>
-        <GeneralBloodTestForm onSubmit={onSubmit} animalId={animalId as number} defaultValues={editedItem ? editedItem : animalId ? {...generalBloodTestValues(animalId as number), date: new Date()} : undefined} />
+        <GeneralBloodTestForm
+          onSubmit={onSubmit}
+          hideAnimals={!!animalId}
+          animalId={animalId as number}
+          defaultValues={editedItem ? editedItem : animalId ? { ...generalBloodTestValues(animalId as number), date: new Date() } : undefined}
+        />
       </Modal>
     </div>
   );

@@ -14,11 +14,12 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select";
 
 interface DungTestFormProps {
+  hideAnimals?: boolean;
   defaultValues?: DungTestSchema;
   onSubmit: (values: DungTestSchema) => void;
 }
 
-export function DungTestForm({ onSubmit, defaultValues }: DungTestFormProps) {
+export function DungTestForm({ onSubmit, defaultValues, hideAnimals }: DungTestFormProps) {
   const { t, locale } = useI18n();
 
   const form = useForm<DungTestSchema>({
@@ -146,19 +147,21 @@ export function DungTestForm({ onSubmit, defaultValues }: DungTestFormProps) {
           )}
         />
 
-        <FormField
-          name={"animalTypeId" as any}
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("animals.animalType")}</FormLabel>
-              <FormControl>
-                <AnimalTypeSelect placeholder={t("animals.animalType")} value={field.value} onChange={field.onChange} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {!hideAnimals && (
+          <FormField
+            name={"animalTypeId" as any}
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("animals.animalType")}</FormLabel>
+                <FormControl>
+                  <AnimalTypeSelect placeholder={t("animals.animalType")} value={field.value} onChange={field.onChange} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
 
         <FormField
           name="animalId"
@@ -167,7 +170,13 @@ export function DungTestForm({ onSubmit, defaultValues }: DungTestFormProps) {
             <FormItem>
               <FormLabel>{t("form.animal")}</FormLabel>
               <FormControl>
-                <AnimalSelect placeholder={t("form.animal")} value={field.value} onChange={field.onChange} typeId={animalTypeId} />
+                <AnimalSelect
+                  disabled={hideAnimals}
+                  placeholder={t("form.animal")}
+                  value={field.value}
+                  onChange={field.onChange}
+                  typeId={animalTypeId}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

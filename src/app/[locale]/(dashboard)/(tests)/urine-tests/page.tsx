@@ -34,7 +34,11 @@ export default function UrineTests() {
       <DataTable columns={columns} queryFunction={useGetUrineTests} topSlot={createButton(t("inspections.createUrineTest"))} />
 
       <Modal open={dialog} onClose={handleClose} title={t(editedItem ? "inspections.editUrineTest" : "inspections.createUrineTest")}>
-        <UrineTestForm onSubmit={onSubmit} defaultValues={editedItem ? editedItem : ((animalId ? { ...urineTestValues, animalId } : undefined) as any)} />
+        <UrineTestForm
+          onSubmit={onSubmit}
+          hideAnimals={!!animalId}
+          defaultValues={editedItem ? editedItem : ((animalId ? { ...urineTestValues, animalId } : undefined) as any)}
+        />
       </Modal>
     </div>
   );

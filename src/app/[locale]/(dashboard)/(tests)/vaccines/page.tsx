@@ -51,7 +51,10 @@ export default function Vaccines() {
       />
 
       <Modal open={dialog} onClose={handleClose} title={t(editedItem ? "inspections.editVaccine" : "inspections.createVaccine")}>
-        <VaccineForm onSubmit={onSubmit} defaultValues={editedItem ? editedItem : animalId ? { ...vaccineValues, animalId, date: new Date() } as any : undefined} />
+        <VaccineForm
+          onSubmit={onSubmit}
+          hideAnimals={!!animalId}
+          defaultValues={editedItem ? editedItem : animalId ? { ...vaccineValues, animalId, date: new Date() } as any : undefined} />
       </Modal>
     </div>
   );

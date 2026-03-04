@@ -14,12 +14,13 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { GeneralBloodTestSchema, createGeneralBloodTestSchema, generalBloodTestValues } from "./general-blood-test.model";
 
 interface GeneralBloodTestFormProps {
+  hideAnimals?: boolean;
   animalId: number | null;
   defaultValues?: GeneralBloodTestSchema;
   onSubmit: (values: GeneralBloodTestSchema) => void;
 }
 
-export function GeneralBloodTestForm({ onSubmit, defaultValues, animalId }: GeneralBloodTestFormProps) {
+export function GeneralBloodTestForm({ onSubmit, defaultValues, animalId, hideAnimals }: GeneralBloodTestFormProps) {
   const { t, locale } = useI18n();
 
   const form = useForm<GeneralBloodTestSchema>({
@@ -36,19 +37,21 @@ export function GeneralBloodTestForm({ onSubmit, defaultValues, animalId }: Gene
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full">
-        <FormField
-          name={"animalTypeId" as any}
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("animals.animalType")}</FormLabel>
-              <FormControl>
-                <AnimalTypeSelect placeholder={t("animals.animalType")} value={field.value} onChange={field.onChange} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {!hideAnimals && (
+          <FormField
+            name={"animalTypeId" as any}
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("animals.animalType")}</FormLabel>
+                <FormControl>
+                  <AnimalTypeSelect placeholder={t("animals.animalType")} value={field.value} onChange={field.onChange} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
 
         <FormField
           name="animalId"
@@ -57,7 +60,13 @@ export function GeneralBloodTestForm({ onSubmit, defaultValues, animalId }: Gene
             <FormItem>
               <FormLabel>{t("form.animal")}</FormLabel>
               <FormControl>
-                <AnimalSelect placeholder={t("form.animal")} value={field.value} onChange={field.onChange} typeId={animalTypeId} />
+                <AnimalSelect
+                  disabled={hideAnimals}
+                  placeholder={t("form.animal")}
+                  value={field.value}
+                  onChange={field.onChange}
+                  typeId={animalTypeId}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

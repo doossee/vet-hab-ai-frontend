@@ -11,11 +11,12 @@ import { AnimalTypeSelect } from "../animal-types/components/animal-type-select"
 import { AnimalSelect } from "../animals/components/animal-select";
 
 interface DiseaseFormProps {
+  hideAnimals?: boolean;
   defaultValues?: DiseaseSchema;
   onSubmit: (values: DiseaseSchema) => void;
 }
 
-export function DiseaseForm({ onSubmit, defaultValues }: DiseaseFormProps) {
+export function DiseaseForm({ onSubmit, defaultValues, hideAnimals }: DiseaseFormProps) {
   const { t } = useI18n();
 
   const form = useForm<DiseaseSchema>({
@@ -75,19 +76,21 @@ export function DiseaseForm({ onSubmit, defaultValues }: DiseaseFormProps) {
           )}
         />
 
-        <FormField
-          name={"animalTypeId" as any}
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("animals.animalType")}</FormLabel>
-              <FormControl>
-                <AnimalTypeSelect placeholder={t("animals.animalType")} value={field.value} onChange={field.onChange} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {!hideAnimals && (
+          <FormField
+            name={"animalTypeId" as any}
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("animals.animalType")}</FormLabel>
+                <FormControl>
+                  <AnimalTypeSelect placeholder={t("animals.animalType")} value={field.value} onChange={field.onChange} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
 
         <FormField
           name="animalId"
@@ -96,7 +99,7 @@ export function DiseaseForm({ onSubmit, defaultValues }: DiseaseFormProps) {
             <FormItem>
               <FormLabel>{t("form.animal")}</FormLabel>
               <FormControl>
-                <AnimalSelect placeholder={t("form.animal")} value={field.value} onChange={field.onChange} typeId={animalTypeId} />
+                <AnimalSelect disabled={hideAnimals} placeholder={t("form.animal")} value={field.value} onChange={field.onChange} typeId={animalTypeId} />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -12,7 +12,7 @@ export function useCreateAnimal() {
     mutationFn: animalsControllerCreate,
     onSuccess: (data) => {
       createQueryData<AnimalSchema>(client, [AnimalQueryKeys.ANIMALS], data);
-      // client.invalidateQueries({ queryKey: [AnimalColorQueryKeys.ANIMAL_COLORS] })
+      client.invalidateQueries({ queryKey: [AnimalQueryKeys.ANIMALS_SELECT] })
     },
   });
 }
@@ -24,7 +24,7 @@ export function useUpdateAnimal() {
     mutationFn: async ({ id, body }) => animalsControllerUpdate(+id, body),
     onSuccess: (data) => {
       updateQueryData<Color>(client, [AnimalQueryKeys.ANIMALS], data);
-      // client.invalidateQueries({ queryKey: [AnimalColorQueryKeys.ANIMAL_COLORS] })
+      client.invalidateQueries({ queryKey: [AnimalQueryKeys.ANIMALS_SELECT] })
     },
   });
 }
@@ -36,7 +36,7 @@ export function useDeleteAnimal() {
     mutationFn: animalsControllerRemove,
     onSuccess: (data) => {
       removeQueryData<Color>(client, [AnimalQueryKeys.ANIMALS], data.id);
-      // client.invalidateQueries({ queryKey: [AnimalColorQueryKeys.ANIMAL_COLORS] })
+      client.invalidateQueries({ queryKey: [AnimalQueryKeys.ANIMALS_SELECT] })
     },
   });
 }

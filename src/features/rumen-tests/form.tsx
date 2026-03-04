@@ -10,11 +10,12 @@ import { RumenTestSchema, createRumenTestSchema, rumenTestValues } from "./rumen
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/shared/components/ui/form";
 
 interface RumenTestFormProps {
+  hideAnimals?: boolean;
   defaultValues?: RumenTestSchema;
   onSubmit: (values: RumenTestSchema) => void;
 }
 
-export function RumenTestForm({ onSubmit, defaultValues }: RumenTestFormProps) {
+export function RumenTestForm({ onSubmit, defaultValues, hideAnimals }: RumenTestFormProps) {
   const { t } = useI18n();
 
   const form = useForm<RumenTestSchema>({
@@ -32,7 +33,7 @@ export function RumenTestForm({ onSubmit, defaultValues }: RumenTestFormProps) {
             <FormItem>
               <FormLabel>{t("form.animal")}</FormLabel>
               <FormControl>
-                <AnimalSelect placeholder={t("form.animal")} value={field.value} onChange={field.onChange} />
+                <AnimalSelect disabled={hideAnimals} placeholder={t("form.animal")} value={field.value} onChange={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>

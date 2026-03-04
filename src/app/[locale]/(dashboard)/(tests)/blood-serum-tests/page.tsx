@@ -41,7 +41,12 @@ export default function BloodSerumTests() {
       <DataTable columns={columns} queryFunction={useGetBloodSerumTests} topSlot={createButton(t("inspections.createBloodSerumTest"))} />
 
       <Modal open={dialog} onClose={handleClose} widthClassName="max-w-[700px]!" title={t(editedItem ? "inspections.editBloodSerumTest" : "inspections.createBloodSerumTest")}>
-        <BloodSerumTestForm onSubmit={onSubmit} animalId={animalId as number} defaultValues={editedItem ? editedItem : undefined} />
+        <BloodSerumTestForm
+          onSubmit={onSubmit}
+          hideAnimals={!!animalId}
+          animalId={animalId as number}
+          defaultValues={editedItem ? editedItem : undefined}
+        />
       </Modal>
     </div>
   );

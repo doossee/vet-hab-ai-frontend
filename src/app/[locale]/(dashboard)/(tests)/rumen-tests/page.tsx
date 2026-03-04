@@ -43,7 +43,11 @@ export default function RumenTests() {
       <DataTable columns={columns} queryFunction={useGetRumenTests} topSlot={createButton(t("rumenTests.createRumenTest"))} />
 
       <Modal open={dialog} onClose={handleClose} title={t(editedItem ? "rumenTests.editRumenTest" : "rumenTests.createRumenTest")}>
-        <RumenTestForm onSubmit={onSubmit} defaultValues={editedItem ? editedItem : animalId ? { ...rumenTestValues, animalId } as any : (undefined as any)} />
+        <RumenTestForm
+          onSubmit={onSubmit}
+          hideAnimals={!!animalId}
+          defaultValues={editedItem ? editedItem : animalId ? ({ ...rumenTestValues, animalId } as any) : (undefined as any)}
+        />
       </Modal>
     </div>
   );

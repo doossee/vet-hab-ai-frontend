@@ -66,12 +66,17 @@ export default function Diseases() {
       <DataTable columns={columns} queryFunction={useGetDiseases} topSlot={createButton(t("inspections.createDisease"))} />
 
       <Modal open={dialog} onClose={handleClose} title={t(editedItem ? "inspections.editDisease" : "inspections.createDisease")}>
-        <DiseaseForm defaultValues={editedItem ? editedItem : queryAnimalId ? { ...diseaseValues, animalId: queryAnimalId, endTime: new Date(), startTime: new Date() } as any : undefined} onSubmit={onSubmit} />
+        <DiseaseForm
+          hideAnimals={!!queryAnimalId}
+          defaultValues={editedItem ? editedItem : queryAnimalId ? ({ ...diseaseValues, animalId: queryAnimalId, endTime: new Date(), startTime: new Date() } as any) : undefined}
+          onSubmit={onSubmit}
+        />
       </Modal>
 
       <Modal open={diseaseId !== null} onClose={() => setDiseaseId(null)} title={t("inspections.createInspection")}>
         <InspectionForm
           type="DISEASE"
+          hideAnimals={!!animalId}
           defaultValues={
             editedItem
               ? {

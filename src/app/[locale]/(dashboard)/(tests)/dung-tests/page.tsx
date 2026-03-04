@@ -33,7 +33,11 @@ export default function DungTests() {
       <DataTable columns={columns} queryFunction={useGetDungTests} topSlot={createButton(t("inspections.createDungTest"))} />
 
       <Modal open={dialog} onClose={handleClose} title={t(editedItem ? "inspections.editDungTest" : "inspections.createDungTest")}>
-        <DungTestForm onSubmit={onSubmit} defaultValues={editedItem ? editedItem : ((animalId ? { ...dungTestValues, animalId } : undefined) as any)} />
+        <DungTestForm
+          onSubmit={onSubmit}
+          hideAnimals={!!animalId}
+          defaultValues={editedItem ? editedItem : ((animalId ? { ...dungTestValues, animalId } : undefined) as any)}
+        />
       </Modal>
     </div>
   );
