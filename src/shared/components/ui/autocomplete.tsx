@@ -211,7 +211,7 @@ export function Autocomplete<T>({
             </div>
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" align="start">
+        <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" align="start" sideOffset={5} onTouchStart={(e) => e.stopPropagation()} onTouchMove={(e) => e.stopPropagation()}>
           {!hideSearch && (
             <div className="flex items-center border-b px-3 py-2">
               <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
@@ -222,9 +222,13 @@ export function Autocomplete<T>({
 
           <div
             className="max-h-[200px] overflow-auto overscroll-contain"
-            style={{ scrollBehavior: "smooth" }}
+            // style={{ scrollBehavior: "smooth" }}
             onWheel={(e) => {
               e.stopPropagation();
+            }}
+            style={{
+              WebkitOverflowScrolling: 'touch',
+              touchAction: 'pan-y',
             }}
             tabIndex={-1}>
             {allOptions.length === 0 && !isLoading && (
