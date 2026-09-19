@@ -51,9 +51,9 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            BASE_URL=${{ vars.BASE_URL }}
-            NEXT_PUBLIC_BASE_URL=${{ vars.NEXT_PUBLIC_BASE_URL }}
-            NEXT_PUBLIC_PREDICT_BASE_URL=${{ vars.NEXT_PUBLIC_PREDICT_BASE_URL }}
+            BASE_URL=${{ vars.BASE_URL || 'http://old-backend:3000' }}
+            NEXT_PUBLIC_BASE_URL=${{ vars.NEXT_PUBLIC_BASE_URL || 'https://api-old.vet-diagnostics.uz' }}
+            NEXT_PUBLIC_PREDICT_BASE_URL=${{ vars.NEXT_PUBLIC_PREDICT_BASE_URL || 'https://api-old.vet-diagnostics.uz/predict' }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -62,7 +62,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-and-push
     steps:
-      - name: Dispatch deploy-frontend to vet-hab-deploy
+      - name: Dispatch old frontend deploy to vet-diagnostics-deploy
         env:
           GH_TOKEN: ${{ secrets.OPS_DISPATCH_TOKEN }}
         run: |
@@ -70,6 +70,6 @@ jobs:
             -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            https://api.github.com/repos/doossee/vet-hab-deploy/dispatches \
-            -d "{\"event_type\":\"deploy-frontend\",\"client_payload\":{\"sha\":\"${{ github.sha }}\"}}"
-          echo "Triggered frontend deploy on the ops repo."
+            https://api.github.com/repos/doossee/vet-diagnostics-deploy/dispatches \
+            -d "{\"event_type\":\"deploy-old-frontend\",\"client_payload\":{\"sha\":\"${{ github.sha }}\"}}"
+          echo "Triggered old frontend deploy on the central ops repo."
