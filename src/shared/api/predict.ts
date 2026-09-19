@@ -9,5 +9,5 @@ type PredictResponse = {
 }
 
 export function getPredict(body: {params: number[]}) {
-  return predictApiInstance.post<PredictResponse>('predict_v2', body)
+  return predictApiInstance.post<PredictResponse>('/predict_v2', body)
 }

@@ -52,8 +52,8 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             BASE_URL=${{ vars.BASE_URL || 'http://old-backend:3000' }}
-            NEXT_PUBLIC_BASE_URL=${{ vars.NEXT_PUBLIC_BASE_URL || 'https://api-old.vet-diagnostics.uz' }}
-            NEXT_PUBLIC_PREDICT_BASE_URL=${{ vars.NEXT_PUBLIC_PREDICT_BASE_URL || 'https://api-old.vet-diagnostics.uz/predict' }}
+            NEXT_PUBLIC_BASE_URL=${{ vars.NEXT_PUBLIC_BASE_URL || 'https://old-api.vet-diagnostics.uz' }}
+            NEXT_PUBLIC_PREDICT_BASE_URL=${{ vars.NEXT_PUBLIC_PREDICT_BASE_URL || 'https://old-ai.vet-diagnostics.uz' }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
